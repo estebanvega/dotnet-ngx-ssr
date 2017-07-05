@@ -5,9 +5,9 @@ var helpers = require('./helpers');
 
 module.exports = {
   entry: {
-    'polyfills': './src/polyfills.ts',
-    'vendor': './src/vendor.ts',
-    'app': './src/main.ts'
+    'polyfill': './ClientApp/polyfill.ts',
+    'vendor': './ClientApp/vendor.ts',
+    'app': './ClientApp/main-client.ts'
   },
 
   resolve: {
@@ -21,7 +21,7 @@ module.exports = {
         loaders: [
           {
             loader: 'awesome-typescript-loader',
-            options: { configFileName: helpers.root('src', 'tsconfig.json') }
+            options: { configFileName: helpers.root('tsconfig.json') }
           } , 'angular2-template-loader'
         ]
       },
@@ -33,15 +33,15 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
         loader: 'file-loader?name=assets/[name].[hash].[ext]'
       },
+      /**
+       * To string and css loader support for *.css files (from Angular components)
+       * Returns file content as string
+       *
+       */
       {
         test: /\.css$/,
-        exclude: helpers.root('src', 'app'),
-        loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' })
-      },
-      {
-        test: /\.css$/,
-        include: helpers.root('src', 'app'),
-        loader: 'raw-loader'
+        use: ['to-string-loader', 'css-loader'],
+        exclude: [helpers.root('src', 'styles')]
       }
     ]
   },
@@ -51,16 +51,16 @@ module.exports = {
     new webpack.ContextReplacementPlugin(
       // The (\\|\/) piece accounts for path separators in *nix and Windows
       /angular(\\|\/)core(\\|\/)@angular/,
-      helpers.root('./src'), // location of your src
+      helpers.root('./ClientApp'), // location of your src
       {} // a map of your routes
     ),
 
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['app', 'vendor', 'polyfills']
+      name: ['app', 'vendor', 'polyfill']
     }),
 
     new HtmlWebpackPlugin({
-      template: 'src/index.html'
+      template: 'ClientApp/index.html'
     })
   ]
 };
