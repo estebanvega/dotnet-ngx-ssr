@@ -31,5 +31,8 @@ msbuild.wrn
 # Visual Studio 2015
 .vs/
 
-# Node Files #
+# Node Files
 /node_modules/
+
+# Client build output
+ClientApp/dist

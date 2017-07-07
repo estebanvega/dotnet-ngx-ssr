@@ -4,7 +4,9 @@
   "description": "# Getting started - dotnet restore - dotnet run dotnet-ngx-ssr.csproj",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf dist && webpack --config config/webpack.prod.js --bail",
+    "build:dev": "rimraf ClientApp/dist && webpack --config ClientApp/config/webpack.dev.js --bail"
   },
   "repository": {
     "type": "git",
@@ -33,10 +35,20 @@
   "devDependencies": {
     "@angular/compiler-cli": "^4.2.5",
     "@types/node": "^8.0.7",
+    "angular2-template-loader": "^0.6.2",
+    "awesome-typescript-loader": "^3.2.1",
     "codelyzer": "^3.1.2",
+    "css-loader": "^0.28.4",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "html-loader": "^0.4.5",
+    "html-webpack-plugin": "^2.29.0",
+    "rimraf": "^2.6.1",
+    "style-loader": "^0.18.2",
+    "to-string-loader": "^1.1.5",
     "ts-node": "^3.1.0",
     "tslint": "^5.4.3",
     "typescript": "^2.4.1",
-    "webpack": "^3.0.0"
+    "webpack": "2.6.1",
+    "webpack-merge": "^4.1.0"
   }
 }
